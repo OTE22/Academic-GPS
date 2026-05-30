@@ -2,6 +2,10 @@
 
 **AI-Powered Career Roadmap Generator** - A full-stack web application that generates personalized 8-semester academic roadmaps for students based on their career goals, current skills, GPA, and interests.
 
+<p align="center">
+  <img src="./demo_acd_gps.gif" alt="Academic GPS Demo" width="100%" />
+</p>
+
 ---
 
 ## Architecture Overview
