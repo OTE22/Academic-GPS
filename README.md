@@ -400,3 +400,125 @@ The client runs on `http://localhost:5173` and proxies `/api` requests to `http:
 - **Cancellable Requests**: AbortController support for cancelling generation
 - **Timeout Protection**: 120-second request timeout
 - **Success Probability**: AI-calculated probability based on profile completeness
+
+---
+
+## Deployment (Free Hosting)
+
+### Recommended: Vercel (Frontend) + Render (Backend)
+
+---
+
+### Step 1: Deploy Backend to Render
+
+1. Push your repo to GitHub
+
+2. Go to [render.com](https://render.com) → **New** → **Web Service**
+
+3. Connect your GitHub repo
+
+4. Configure:
+   | Field | Value |
+   |-------|-------|
+   | **Name** | `academic-gps-api` |
+   | **Root Directory** | `server` |
+   | **Runtime** | `Node` |
+   | **Build Command** | `npm install && npm run build` |
+   | **Start Command** | `npm start` |
+   | **Port** | `3001` |
+
+5. Add **Environment Variables**:
+   ```
+   OPENAI_API_KEY=sk-...
+   ANTHROPIC_API_KEY=sk-ant-...
+   OPENROUTER_API_KEY=...
+   SERPER_API_KEY=...
+   NODE_ENV=production
+   ```
+
+6. Click **Create Web Service** — your backend will be live at `https://your-app.onrender.com`
+
+---
+
+### Step 2: Deploy Frontend to Vercel
+
+1. Go to [vercel.com](https://vercel.com) → **New Project**
+
+2. Import your GitHub repo
+
+3. Configure:
+   | Field | Value |
+   |-------|-------|
+   | **Framework** | `Vite` |
+   | **Root Directory** | `client` |
+   | **Build Command** | `npm run build` |
+   | **Output Directory** | `dist` |
+
+4. Add **Environment Variable**:
+   ```
+   VITE_API_URL=https://your-app.onrender.com
+   ```
+
+5. Update `client/vite.config.ts` to use the env variable for the proxy:
+   ```typescript
+   export default defineConfig({
+     plugins: [react()],
+     server: {
+       proxy: {
+         "/api": {
+           target: process.env.VITE_API_URL || "http://localhost:3001",
+           changeOrigin: true,
+         },
+       },
+     },
+   });
+   ```
+
+6. Click **Deploy** — your frontend will be live at `https://your-app.vercel.app`
+
+---
+
+### Step 3: Update API Base URL (Production)
+
+In `client/src/App.tsx`, update the fetch URL to use the env variable:
+
+```typescript
+const API_BASE = import.meta.env.VITE_API_URL || "";
+const response = await fetch(`${API_BASE}/api/generate-roadmap", { ... });
+```
+
+---
+
+### Alternative: Single Platform (Railway)
+
+If you want both frontend + backend on one platform:
+
+1. Go to [railway.com](https://railway.com) → **New Project** → **Deploy from GitHub**
+
+2. Add two services:
+   - **Service 1**: Root dir `server` — Build: `npm install && npm run build`, Start: `npm start`
+   - **Service 2**: Root dir `client` — Build: `npm install && npm run build`, Start: `npx serve dist`
+
+3. Set environment variables in the Railway dashboard
+
+4. Railway assigns a public URL automatically
+
+---
+
+### Other Free Options
+
+| Platform | Frontend | Backend | SSE Support | Cold Start |
+|----------|----------|---------|-------------|------------|
+| **Vercel + Render** | ✅ | ✅ | ✅ | ~15min idle |
+| **Railway** | ✅ | ✅ | ✅ | No |
+| **Fly.io** | ✅ | ✅ | ✅ | ~5min idle |
+| **Netlify + Cyclic** | ✅ | ✅ | ✅ | ~5min idle |
+| **Glitch** | ✅ | ✅ | ✅ | ~5min idle |
+
+> **Note**: Free tiers have resource limits. For production use, consider upgrading to a paid plan.
+
+---
+
+<p align="center">
+  <b>Built with ❤️ by ote22</b>
+</p>
