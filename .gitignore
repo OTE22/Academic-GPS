@@ -1,0 +1,93 @@
+# ==============================================================================
+#                 AMAZING & PROFESSIONAL GITIGNORE TEMPLATE
+# ==============================================================================
+# This file is structured to keep the repository clean, secure, and focused.
+# It excludes documentation, local media, environment secrets, and build targets.
+
+# ------------------------------------------------------------------------------
+# 1. USER SPECIFIC EXCLUSIONS
+# ------------------------------------------------------------------------------
+# Ignore all markdown files in the repository
+*.md
+
+# Ignore the local files directory (usually contains raw/temporary assets)
+files/
+
+# Ignore the files.zip archive
+files.zip
+
+# ------------------------------------------------------------------------------
+# 2. DEPENDENCIES & PACKAGE MANAGERS
+# ------------------------------------------------------------------------------
+# Node dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# ------------------------------------------------------------------------------
+# 3. BUILD OUTPUTS & PRODUCTION TARGETS
+# ------------------------------------------------------------------------------
+# Build directories (Vite, Next.js, etc.)
+dist/
+build/
+.next/
+out/
+
+# TypeScript build info / caches
+*.tsbuildinfo
+
+# ------------------------------------------------------------------------------
+# 4. ENVIRONMENT VARIABLES & SECRETS
+# ------------------------------------------------------------------------------
+# Local environment variables containing sensitive APIs/keys
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env.bak
+
+# ------------------------------------------------------------------------------
+# 5. DIAGNOSTICS & SYSTEM LOGS
+# ------------------------------------------------------------------------------
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# ------------------------------------------------------------------------------
+# 6. SYSTEM-SPECIFIC & IDE CONFIGURATIONS
+# ------------------------------------------------------------------------------
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# VS Code IDE configs
+.vscode/
+!.vscode/extensions.json
+.vscode/*.log
+
+# JetBrains IDE configs (WebStorm, IntelliJ)
+.idea/
+
+# ------------------------------------------------------------------------------
+# 7. MISCELLANEOUS CACHES & BACKUPS
+# ------------------------------------------------------------------------------
+# Editor temporary files and backups
+*.bak
+*~
+\#*\#
+.#*
